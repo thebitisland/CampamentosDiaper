@@ -21,5 +21,9 @@
 
     <color name="gradient_background_1">#d3f1cf</color>
     <color name="gradient_background_2">#fee9ca</color>
+    <color name="login_fields">#d1b993</color>
+    <color name="light_text">#e1dcb2</color>
+    
+    
 
 </resources>
