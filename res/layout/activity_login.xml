@@ -5,6 +5,15 @@
     android:background="@drawable/gradient"
     tools:context=".LoginActivity" >
     
+    <!-- Dummy item to prevent fields from receiving focus -->
+	<EditText
+    android:focusable="true" 
+    android:focusableInTouchMode="true"
+    android:layout_width="0px" 
+    android:layout_height="0px"
+	android:paddingLeft="-10dp"
+    />
+    
     <ImageView
         android:id="@+id/nature_background"
         android:layout_width="match_parent"
@@ -45,6 +54,7 @@
         android:inputType="text"
         android:paddingLeft="5dp"
         android:background="@drawable/textfield_background"
+        android:selectAllOnFocus="true"
         />
     
     <EditText
@@ -59,6 +69,7 @@
         android:singleLine="true"
         android:inputType="textPassword"
         android:background="@drawable/textfield_background"
+        android:selectAllOnFocus="true"
         />
     
     <Button
