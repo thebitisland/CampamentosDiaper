@@ -36,8 +36,8 @@ public class LoginActivity extends Activity {
 		login_button = (Button) findViewById(R.id.login_button);
 		logo = (ImageView) findViewById(R.id.logo);
 		
-		/* El logo desaparece cuando introducimos usuario/contraseña */
-		user_field.setOnFocusChangeListener(new OnFocusChangeListener() {
+		/* El logo desaparece cuando introducimos usuario/contraseï¿½a */
+		/*user_field.setOnFocusChangeListener(new OnFocusChangeListener() {
 			public void onFocusChange(View arg0, boolean arg1) {
 				if(arg1){
 					logo.setVisibility(View.GONE);
@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
 					logo.setVisibility(View.VISIBLE);
 				}
 			}
-		});
+		});/*
 		/* Problemas: El logo no reaparece */
 		
 		login_button.setOnClickListener(new OnClickListener() {
@@ -64,10 +64,10 @@ public class LoginActivity extends Activity {
 				Log.d("prueba", user);
 				Log.d("prueba", pass);
 
-				/* Falta el login en sí xD */
+				/* Falta el login en sï¿½ xD */
 				loginOK = true;
 
-				/* El usuario está en un campamento? Se puede devolver en la misma query del login? */
+				/* El usuario estï¿½ en un campamento? Se puede devolver en la misma query del login? */
 				camp = true;
 				
 				/* fin de lo que falta */
@@ -81,7 +81,7 @@ public class LoginActivity extends Activity {
 					startActivity(login);
 					finish();*/
 				} else {
-					CharSequence text = "Error en usuario/contraseña!";
+					CharSequence text = "Error en usuario/contraseï¿½a!";
 					int duration = Toast.LENGTH_SHORT;
 					Toast toast = Toast.makeText(context, text, duration);
 					toast.show();
