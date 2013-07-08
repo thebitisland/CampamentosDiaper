@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/home_settings_1"
+        android:orderInCategory="100"
+        android:title="@string/home_settings_1"/>
+        
+    <item
+        android:id="@+id/home_settings_2"
+        android:orderInCategory="100"
+        android:title="@string/home_settings_2"/>
+
+</menu>

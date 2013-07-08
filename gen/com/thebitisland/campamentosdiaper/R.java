@@ -36,8 +36,10 @@ public final class R {
         public static final int textfield_background=0x7f020006;
     }
     public static final class id {
-        public static final int action_settings=0x7f090006;
+        public static final int home_settings_1=0x7f090006;
+        public static final int home_settings_2=0x7f090007;
         public static final int login_button=0x7f090005;
+        public static final int login_settings_1=0x7f090008;
         public static final int logo=0x7f090002;
         public static final int nature_background=0x7f090000;
         public static final int password_field=0x7f090004;
@@ -45,17 +47,21 @@ public final class R {
         public static final int user_field=0x7f090003;
     }
     public static final class layout {
-        public static final int activity_login=0x7f030000;
+        public static final int activity_home=0x7f030000;
+        public static final int activity_login=0x7f030001;
     }
     public static final class menu {
-        public static final int login=0x7f080000;
+        public static final int home=0x7f080000;
+        public static final int login=0x7f080001;
     }
     public static final class string {
-        public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int login_button=0x7f060004;
-        public static final int password_field=0x7f060003;
-        public static final int user_field=0x7f060002;
+        public static final int home_settings_1=0x7f060002;
+        public static final int home_settings_2=0x7f060003;
+        public static final int login_button=0x7f060006;
+        public static final int login_settings_1=0x7f060001;
+        public static final int password_field=0x7f060005;
+        public static final int user_field=0x7f060004;
     }
     public static final class style {
         /** 
