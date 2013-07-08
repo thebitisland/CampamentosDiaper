@@ -6,9 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
@@ -16,7 +21,8 @@ public class LoginActivity extends Activity {
 	EditText user_field;
 	EditText password_field;
 	Button login_button;
-	Boolean loginOK;
+	Boolean loginOK, camp;
+	ImageView logo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +34,29 @@ public class LoginActivity extends Activity {
 		user_field = (EditText) findViewById(R.id.user_field);
 		password_field = (EditText) findViewById(R.id.password_field);
 		login_button = (Button) findViewById(R.id.login_button);
-
+		logo = (ImageView) findViewById(R.id.logo);
+		
+		/* El logo desaparece cuando introducimos usuario/contraseña */
+		user_field.setOnFocusChangeListener(new OnFocusChangeListener() {
+			public void onFocusChange(View arg0, boolean arg1) {
+				if(arg1){
+					logo.setVisibility(View.GONE);
+				}else{
+					logo.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		password_field.setOnFocusChangeListener(new OnFocusChangeListener() {
+			public void onFocusChange(View arg0, boolean arg1) {
+				if(arg1){
+					logo.setVisibility(View.GONE);
+				}else{
+					logo.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		/* Problemas: El logo no reaparece */
+		
 		login_button.setOnClickListener(new OnClickListener() {
 			public void onClick(android.view.View arg0) {
 				String user = user_field.getText().toString();
@@ -38,12 +66,20 @@ public class LoginActivity extends Activity {
 
 				/* Falta el login en sí xD */
 				loginOK = true;
+
+				/* El usuario está en un campamento? Se puede devolver en la misma query del login? */
+				camp = true;
+				
 				/* fin de lo que falta */
 
-				if (loginOK) {
+				if (loginOK == true && camp == true) {
 					Intent login = new Intent(context, HomeActivity.class);
 					startActivity(login);
 					finish();
+				} else if (loginOK == true && camp == false) {
+					/*Intent login = new Intent(context, CampsActivity.class);
+					startActivity(login);
+					finish();*/
 				} else {
 					CharSequence text = "Error en usuario/contraseña!";
 					int duration = Toast.LENGTH_SHORT;
@@ -53,7 +89,6 @@ public class LoginActivity extends Activity {
 
 			}
 		});
-
 	}
 
 	@Override
