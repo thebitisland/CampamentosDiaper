@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/nature_background"
-        android:layout_width="fill_parent"
-        android:layout_height="343px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:scaleType="center"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
