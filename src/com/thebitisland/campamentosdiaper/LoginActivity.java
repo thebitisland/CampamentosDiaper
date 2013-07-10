@@ -27,30 +27,19 @@ public class LoginActivity extends Activity {
 	Button login_button;
 	Boolean loginOK, camp;
 	ImageView logo;
+	Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		final Context context = getApplicationContext();
+		context = getApplicationContext();
 
 		user_field = (EditText) findViewById(R.id.user_field);
 		password_field = (EditText) findViewById(R.id.password_field);
 		login_button = (Button) findViewById(R.id.login_button);
 		logo = (ImageView) findViewById(R.id.logo);
-
-		/* ñapa v1 */
-		/*
-		 * user_field.setOnFocusChangeListener(new OnFocusChangeListener() {
-		 * public void onFocusChange(View arg0, boolean arg1) { if(arg1){
-		 * logo.setVisibility(View.GONE); }else{
-		 * logo.setVisibility(View.VISIBLE); } } });
-		 * password_field.setOnFocusChangeListener(new OnFocusChangeListener() {
-		 * public void onFocusChange(View arg0, boolean arg1) { if(arg1){
-		 * logo.setVisibility(View.GONE); }else{
-		 * logo.setVisibility(View.VISIBLE); } } });
-		 */
 
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
 		final View activityRootView = (View) findViewById(android.R.id.content);
