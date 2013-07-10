@@ -4,20 +4,13 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
@@ -61,18 +54,19 @@ public class LoginActivity extends Activity {
 			public void onClick(android.view.View arg0) {
 				String user = user_field.getText().toString();
 				String pass = password_field.getText().toString();
-				Log.d("prueba", user);
-				Log.d("prueba", pass);
-
-				/* Falta el login en sï¿½ xD */
-				loginOK = true;
-
+				
+				/* Falta el login en sí xD */
+				if (user.equals("Usuario") && pass.equals("Password")){
+					loginOK = true;
+				} else {
+					loginOK = false;
+				}
 				/*
-				 * El usuario estï¿½ en un campamento? Se puede devolver en la
+				 * El usuario esta en un campamento? Se puede devolver en la
 				 * misma query del login?
+				 * 			Esto era para opción Alvaro, implementando Nico de momento
 				 */
 				camp = true;
-
 				/* fin de lo que falta */
 
 				if (loginOK == true && camp == true) {
@@ -85,7 +79,7 @@ public class LoginActivity extends Activity {
 					 * startActivity(login); finish();
 					 */
 				} else {
-					CharSequence text = "Error en usuario/contraseï¿½a!";
+					CharSequence text = "Error en usuario/password!";
 					int duration = Toast.LENGTH_SHORT;
 					Toast toast = Toast.makeText(context, text, duration);
 					toast.show();

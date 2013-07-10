@@ -1,12 +1,11 @@
 package com.thebitisland.campamentosdiaper.auxClasses;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+/*import java.util.ArrayList;
+import java.util.List;*/
 
-public class Category implements Serializable {
+public class Category  {
 
-    private long id;
+	private long id;
     private String name;
     private String descr;
 
@@ -19,13 +18,15 @@ public class Category implements Serializable {
     }
     
 	public CharSequence getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	public CharSequence getDescr() {
-		// TODO Auto-generated method stub
 		return descr;
+	}
+	
+	public long getID(){
+		return id;
 	}
 
 

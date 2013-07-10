@@ -1,8 +1,6 @@
 package com.thebitisland.campamentosdiaper.auxClasses;
 
-import java.io.Serializable;
-
-public class ItemDetail implements Serializable {
+public class ItemDetail {
 
     private long id;
     //private int imgId;
@@ -16,13 +14,15 @@ public class ItemDetail implements Serializable {
     }
     
     public CharSequence getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	public CharSequence getDescr() {
-		// TODO Auto-generated method stub
 		return descr;
+	}
+	
+	public long getID(){
+		return id;
 	}
 
 }

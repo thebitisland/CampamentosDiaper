@@ -6,7 +6,7 @@
     <string name="home_settings_1">Desconectarse</string>
     <string name="home_settings_2">Opciones</string>
     <string name="user_field">Usuario</string>
-    <string name="password_field">Contraseña</string>
+    <string name="password_field">Password</string>
     <string name="login_button">Entrar</string>
 
 </resources>
