@@ -51,51 +51,71 @@
         android:src="@drawable/camp_pic"
         android:background="@drawable/drop_shadow"
         />
-    
+    <TableLayout
+        android:id="@+id/button_column"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/camp_pic"
+        android:weightSum="3"
+        >
+        
+        <TableRow
+            android:id="@+id/row1"
+            android:gravity="center_horizontal"
+            >
     <Button
         android:id="@+id/personal_button"
-        android:layout_below="@id/camp_pic"
         android:layout_width="120dp"
-        android:layout_height="37dp"
+        android:layout_height="40dp"
         android:background="@drawable/campbutton_background"
         android:text="Personal"
         android:textColor="@color/light_text" 
-        android:layout_alignRight="@id/camp_pic"
-        android:layout_marginRight="4dp"/>    
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"/>   
+        </TableRow> 
         
+        <TableRow
+            android:id="@+id/row2"
+            android:gravity="center_horizontal"
+            >    
     <Button
         android:id="@+id/activities_button"
-        android:layout_below="@id/personal_button"
         android:layout_width="120dp"
-        android:layout_height="37dp"
+        android:layout_height="40dp"
         android:background="@drawable/campbutton_background"
         android:text="Actividades"
         android:textColor="@color/light_text" 
-        android:layout_alignRight="@id/camp_pic"
         android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="6dp"/> 
-    
+    </TableRow>
+    <TableRow 
+        android:id="@+id/row3"
+        android:gravity="center_horizontal"
+        >
     <Button
         android:id="@+id/map_button"
-        android:layout_below="@id/camp_pic"
         android:layout_width="120dp"
-        android:layout_height="37dp"
+        android:layout_height="40dp"
         android:background="@drawable/campbutton_background"
         android:text="Mapa"
         android:textColor="@color/light_text" 
-        android:layout_alignLeft="@id/camp_pic"
-        android:layout_marginLeft="4dp"/>	
-    
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"/>
+    </TableRow>	
+
+</TableLayout>
+
     <Button
         android:id="@+id/camps_button"
         android:layout_width="170dp"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="7dp"
         android:background="@drawable/lightbutton_background"
         android:text="Otros campamentos"
-        android:textColor="#7e4f31" 
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"/>
+        android:textColor="#7e4f31" />
     
     </RelativeLayout>
