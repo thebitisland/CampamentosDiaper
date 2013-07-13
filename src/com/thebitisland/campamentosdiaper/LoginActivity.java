@@ -54,41 +54,31 @@ public class LoginActivity extends Activity {
 			public void onClick(android.view.View arg0) {
 				String user = user_field.getText().toString();
 				String pass = password_field.getText().toString();
-				
-				/* Falta el login en s� xD */
-				if (user.equals("Alvaro") && pass.equals("Password")){
+
+				/*
+				 * El usuario esta en un campamento? Se puede devolver en la
+				 * misma query del login? Esto era para opci�n Alvaro,
+				 * implementando Nico de momento
+				 */
+				camp = true;
+				loginOK = true;
+
+				if (loginOK == true && camp == true) {
 					Intent login = new Intent(context, CampActivity.class);
 					startActivity(login);
 					finish();
+				} else if (loginOK == true && camp == false) {
+					Intent login = new Intent(context, HomeActivity.class);
+					startActivity(login);
+					finish();
 				} else {
-					loginOK = true;
-					/*
-					 * El usuario esta en un campamento? Se puede devolver en la
-					 * misma query del login?
-					 * 			Esto era para opci�n Alvaro, implementando Nico de momento
-					 */
-					camp = true;
-					/* fin de lo que falta */
-
-					if (loginOK == true && camp == true) {
-						Intent login = new Intent(context, HomeActivity.class);
-						startActivity(login);
-						finish();
-					} else if (loginOK == true && camp == false) {
-						/*
-						 * Intent login = new Intent(context, CampsActivity.class);
-						 * startActivity(login); finish();
-						 */
-					} else {
-						CharSequence text = "Error en usuario/password!";
-						int duration = Toast.LENGTH_SHORT;
-						Toast toast = Toast.makeText(context, text, duration);
-						toast.show();
-					}
+					CharSequence text = "Error en usuario/password!";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
 				}
-				
-
 			}
+
 		});
 	}
 
