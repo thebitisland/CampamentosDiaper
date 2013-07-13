@@ -15,7 +15,7 @@ import android.widget.ExpandableListView;
 public class HomeActivity extends Activity{
 
 	private ExpandableListAdapter mAdapter;
-	static Context context;
+	Context context;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

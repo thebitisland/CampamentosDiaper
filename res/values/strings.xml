@@ -8,5 +8,7 @@
     <string name="user_field">Usuario</string>
     <string name="password_field">Password</string>
     <string name="login_button">Entrar</string>
+    <string name="camp_name">Santoña</string>
+    <string name="camp_descr">01.08.2013 - 15.08.2013</string>
 
 </resources>

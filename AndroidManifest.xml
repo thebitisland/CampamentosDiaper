@@ -24,9 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="com.thebitisland.campamentosdiaper.HomeActivity" >
-            </activity>
+        <activity
+            android:name="com.thebitisland.campamentosdiaper.HomeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.thebitisland.campamentosdiaper.CampActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

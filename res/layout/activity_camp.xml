@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient" >
+
+    <ImageView
+        android:id="@+id/nature_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/nature_background" />
+    
+    <TextView 
+        android:id="@+id/camp_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/camp_name"
+        android:textSize="18sp"
+        android:textColor="#7e4f31"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:textStyle="bold|italic"
+        />
+    
+    <TextView 
+        android:id="@+id/camp_descr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/camp_descr"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:layout_below="@id/camp_name"
+        />
+    
+    <ImageView
+        android:id="@+id/camp_pic"
+        android:layout_below="@id/camp_descr"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/camp_pic"
+        android:background="@drawable/drop_shadow"
+        />
+    
+    <Button
+        android:id="@+id/personal_button"
+        android:layout_below="@id/camp_pic"
+        android:layout_width="120dp"
+        android:layout_height="37dp"
+        android:background="@drawable/campbutton_background"
+        android:text="Personal"
+        android:textColor="@color/light_text" 
+        android:layout_alignRight="@id/camp_pic"
+        android:layout_marginRight="4dp"/>    
+        
+    <Button
+        android:id="@+id/activities_button"
+        android:layout_below="@id/personal_button"
+        android:layout_width="120dp"
+        android:layout_height="37dp"
+        android:background="@drawable/campbutton_background"
+        android:text="Actividades"
+        android:textColor="@color/light_text" 
+        android:layout_alignRight="@id/camp_pic"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="6dp"/> 
+    
+    <Button
+        android:id="@+id/map_button"
+        android:layout_below="@id/camp_pic"
+        android:layout_width="120dp"
+        android:layout_height="37dp"
+        android:background="@drawable/campbutton_background"
+        android:text="Mapa"
+        android:textColor="@color/light_text" 
+        android:layout_alignLeft="@id/camp_pic"
+        android:layout_marginLeft="4dp"/>	
+    
+    <Button
+        android:id="@+id/camps_button"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:background="@drawable/lightbutton_background"
+        android:text="Otros campamentos"
+        android:textColor="#7e4f31" 
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"/>
+    
+    </RelativeLayout>

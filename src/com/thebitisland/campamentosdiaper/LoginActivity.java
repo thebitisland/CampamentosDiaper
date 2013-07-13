@@ -56,34 +56,37 @@ public class LoginActivity extends Activity {
 				String pass = password_field.getText().toString();
 				
 				/* Falta el login en sí xD */
-				if (user.equals("Usuario") && pass.equals("Password")){
-					loginOK = true;
-				} else {
-					loginOK = false;
-				}
-				/*
-				 * El usuario esta en un campamento? Se puede devolver en la
-				 * misma query del login?
-				 * 			Esto era para opción Alvaro, implementando Nico de momento
-				 */
-				camp = true;
-				/* fin de lo que falta */
-
-				if (loginOK == true && camp == true) {
-					Intent login = new Intent(context, HomeActivity.class);
+				if (user.equals("Alvaro") && pass.equals("Password")){
+					Intent login = new Intent(context, CampActivity.class);
 					startActivity(login);
 					finish();
-				} else if (loginOK == true && camp == false) {
-					/*
-					 * Intent login = new Intent(context, CampsActivity.class);
-					 * startActivity(login); finish();
-					 */
 				} else {
-					CharSequence text = "Error en usuario/password!";
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(context, text, duration);
-					toast.show();
+					loginOK = true;
+					/*
+					 * El usuario esta en un campamento? Se puede devolver en la
+					 * misma query del login?
+					 * 			Esto era para opción Alvaro, implementando Nico de momento
+					 */
+					camp = true;
+					/* fin de lo que falta */
+
+					if (loginOK == true && camp == true) {
+						Intent login = new Intent(context, HomeActivity.class);
+						startActivity(login);
+						finish();
+					} else if (loginOK == true && camp == false) {
+						/*
+						 * Intent login = new Intent(context, CampsActivity.class);
+						 * startActivity(login); finish();
+						 */
+					} else {
+						CharSequence text = "Error en usuario/password!";
+						int duration = Toast.LENGTH_SHORT;
+						Toast toast = Toast.makeText(context, text, duration);
+						toast.show();
+					}
 				}
+				
 
 			}
 		});
