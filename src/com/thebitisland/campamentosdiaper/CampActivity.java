@@ -37,7 +37,7 @@ public class CampActivity extends Activity {
 
 			public void onClick(View arg0) {
 				//base de datos, claro
-				String place = "Santoña, Cantabria";
+				String place = "SantoÃ±a, Cantabria";
 				String query = "geo:0,0?q=hospitals near "+ place;
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(query));
 				startActivity(intent);

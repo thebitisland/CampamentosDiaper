@@ -34,7 +34,7 @@ public class LoginActivity extends Activity {
 		login_button = (Button) findViewById(R.id.login_button);
 		logo = (ImageView) findViewById(R.id.logo);
 
-		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
+		/* Ã‘apa vFinal (Ojo con ActionBars, puede dar problemas) */
 		final View activityRootView = (View) findViewById(android.R.id.content);
 		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
@@ -55,7 +55,7 @@ public class LoginActivity extends Activity {
 				String user = user_field.getText().toString();
 				String pass = password_field.getText().toString();
 				
-				/* Falta el login en sí xD */
+				/* Falta el login en sï¿½ xD */
 				if (user.equals("Alvaro") && pass.equals("Password")){
 					Intent login = new Intent(context, CampActivity.class);
 					startActivity(login);
@@ -65,7 +65,7 @@ public class LoginActivity extends Activity {
 					/*
 					 * El usuario esta en un campamento? Se puede devolver en la
 					 * misma query del login?
-					 * 			Esto era para opción Alvaro, implementando Nico de momento
+					 * 			Esto era para opciï¿½n Alvaro, implementando Nico de momento
 					 */
 					camp = true;
 					/* fin de lo que falta */
