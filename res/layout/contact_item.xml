@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+ 
+    <LinearLayout android:id="@+id/contact_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+ 
+        <!-- Person's image -->
+        <ImageView
+            android:id="@+id/contact_image"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:src="@drawable/personal_button"/>
+ 
+    </LinearLayout>
+ 
+    <!-- Person's full name-->
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/contact_row"
+        android:layout_toRightOf="@+id/contact_row"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+    <!-- Person's phone number -->
+    <TextView
+        android:id="@+id/phone_number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_name"
+        android:textColor="#343434"
+        android:textSize="13dip"
+        android:layout_marginTop="1dip"
+        android:layout_alignLeft="@id/contact_name"/>
+ 
+    <!-- Person's occupation (Monitor, Director...) -->
+    <TextView
+        android:id="@+id/occupation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/contact_name"
+        android:gravity="right"
+        android:layout_marginRight="5dip"
+        android:textSize="10dip"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"/>
+ 
+</RelativeLayout>

@@ -15,12 +15,22 @@ public class CampActivity extends Activity {
 	Context context;
 	Button campList;
 	Button mapButton;
+	Button peopleList;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camp);
 
 		context = getApplicationContext();
+		
+		peopleList = (Button) findViewById(R.id.personal_button);
+		peopleList.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				Intent people = new Intent(context, PeopleActivity.class);
+				startActivity(people);
+			}
+		});
 
 		campList = (Button) findViewById(R.id.camps_button);
 		campList.setOnClickListener(new OnClickListener() {

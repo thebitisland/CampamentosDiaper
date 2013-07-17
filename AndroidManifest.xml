@@ -32,6 +32,10 @@
             android:name="com.thebitisland.campamentosdiaper.CampActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.thebitisland.campamentosdiaper.PeopleActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
