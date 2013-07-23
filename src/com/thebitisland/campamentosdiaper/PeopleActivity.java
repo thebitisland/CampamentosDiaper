@@ -16,6 +16,7 @@ public class PeopleActivity extends Activity{
 
 	private ExpandableListAdapter mAdapter;
 	Context context;
+	DBManager database;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,9 @@ public class PeopleActivity extends Activity{
 		setContentView(R.layout.activity_people);
 		
 		context = getApplicationContext();
-		
+		database = new DBManager(this);
+		database.open();
+		database.close();
 		generateExpandableListView();
 
 	}
