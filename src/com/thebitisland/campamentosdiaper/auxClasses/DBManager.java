@@ -23,7 +23,7 @@ public class DBManager {
 	// ---------- Database params and declarations ----------
 	// DB name and tables
 	private static final String DATABASE_NAME = "CampsDB.db";
-	private static final String DATABASE_SESSION_TABLE = "userTable";
+	private static final String DATABASE_USER_TABLE = "userTable";
 	private static final int DATABASE_VERSION = 1;
 	// Class declaration
 	private SQLiteDatabase ourDB;
@@ -57,11 +57,11 @@ public class DBManager {
 		public void onCreate(SQLiteDatabase db) {
 			// TODO Auto-generated method stub
 			//db.execSQL("DROP TABLE IF EXISTS " + DATABASE_SESSION_TABLE);
-			db.execSQL("CREATE TABLE " + DATABASE_SESSION_TABLE + " ("
+			db.execSQL("CREATE TABLE " + DATABASE_USER_TABLE + " ("
 					+ KEY_U_RACEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ KEY_U_FNAME + " VARCHAR," 
 					+ KEY_U_LNAME + " VARCHAR, " 
-					+ KEY_U_BORN + " DOUBLE," 
+					+ KEY_U_BORN + " INTEGER," 
 					+ KEY_U_EMAIL + " VARCHAR," 
 					+ KEY_U_PHONE + " VARCHAR"
 					+ ");");
@@ -75,7 +75,7 @@ public class DBManager {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
-			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_SESSION_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_USER_TABLE);
 			onCreate(db);
 		}
 	}
