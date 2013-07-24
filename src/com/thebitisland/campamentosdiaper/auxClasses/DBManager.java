@@ -33,6 +33,7 @@ public class DBManager {
 	// ---------- Table field declarations ----------
 	// Table 1 - Users (Stores all USEFUL users and their details)
 	public static final String KEY_U_RACEID = "_id";
+	public static final String KEY_U_UNAME = "username";
 	public static final String KEY_U_FNAME = "first_name";
 	public static final String KEY_U_LNAME = "last_name";
 	public static final String KEY_U_BORN = "date_of_birth";
@@ -59,6 +60,7 @@ public class DBManager {
 			//db.execSQL("DROP TABLE IF EXISTS " + DATABASE_SESSION_TABLE);
 			db.execSQL("CREATE TABLE " + DATABASE_USER_TABLE + " ("
 					+ KEY_U_RACEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ KEY_U_UNAME + " VARCHAR,"
 					+ KEY_U_FNAME + " VARCHAR," 
 					+ KEY_U_LNAME + " VARCHAR, " 
 					+ KEY_U_BORN + " INTEGER," 
@@ -105,6 +107,21 @@ public class DBManager {
 	 */
 	public void close() {
 		ourHelper.close();
+	}
+	
+	/**
+	 * Check username. Given a string, the method searches it in the 'username' column
+	 * of the database. 
+	 * @return True if the user exists in the table. False otherwise.
+	 */
+	public boolean checkUsername(String username) {
+		String query = "SELECT "+ KEY_U_UNAME + " FROM "+ DATABASE_USER_TABLE + " WHERE username= " + "\""+username+"\"";
+		Cursor cursor = ourDB.rawQuery(query, null);
+		
+		if(cursor.moveToFirst())
+			return true;
+		
+		return false;
 	}
 
 }

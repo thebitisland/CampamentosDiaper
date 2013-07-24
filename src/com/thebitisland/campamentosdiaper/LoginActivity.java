@@ -1,5 +1,7 @@
 package com.thebitisland.campamentosdiaper;
 
+import com.thebitisland.campamentosdiaper.auxClasses.DBManager;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -60,9 +62,9 @@ public class LoginActivity extends Activity {
 				 * misma query del login? Esto era para opci�n Alvaro,
 				 * implementando Nico de momento
 				 */
-				camp = true;
-				loginOK = true;
-
+				
+				
+				/*
 				if (loginOK == true && camp == true) {
 					Intent login = new Intent(context, CampActivity.class);
 					startActivity(login);
@@ -71,6 +73,12 @@ public class LoginActivity extends Activity {
 					Intent login = new Intent(context, HomeActivity.class);
 					startActivity(login);
 					finish();
+				}*/ 
+				
+				if(checkUsername(user, pass)){
+					Intent login = new Intent(context, CampActivity.class);
+					startActivity(login);
+					finish();	
 				} else {
 					CharSequence text = "Error en usuario/password!";
 					int duration = Toast.LENGTH_SHORT;
@@ -87,6 +95,29 @@ public class LoginActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
+	}
+	
+	public boolean checkUsername(String username, String password) {
+		
+		if(username.equals("") || password.equals("") || username == null || password == null) {
+			Toast.makeText(context, "The user/password field cannot be empty", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		//Open database
+		DBManager db = new DBManager(context);
+		db.open();
+		
+		//Search for username. If it does not exist return false.
+		boolean userCheck = db.checkUsername(username);
+		
+		//Check password. If it does not match the default one, return false.
+		boolean passCheck = password.equals("santonia2013");
+		
+		//Close the database
+		db.close();
+		
+		return userCheck && passCheck;
+		
 	}
 
 }
