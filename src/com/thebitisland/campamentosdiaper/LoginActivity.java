@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,7 +110,7 @@ public class LoginActivity extends Activity {
 		
 		//Search for username. If it does not exist return false.
 		boolean userCheck = db.checkUsername(username);
-		
+
 		//Check password. If it does not match the default one, return false.
 		boolean passCheck = password.equals("santonia2013");
 		

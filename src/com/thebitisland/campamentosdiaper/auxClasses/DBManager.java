@@ -113,6 +113,7 @@ public class DBManager {
 	 * Check username. Given a string, the method searches it in the 'username' column
 	 * of the database. 
 	 * @return True if the user exists in the table. False otherwise.
+	 * @param The username String representation
 	 */
 	public boolean checkUsername(String username) {
 		String query = "SELECT "+ KEY_U_UNAME + " FROM "+ DATABASE_USER_TABLE + " WHERE username= " + "\""+username+"\"";
@@ -123,5 +124,98 @@ public class DBManager {
 		
 		return false;
 	}
+	
+	/**
+	 * Get username first and last name. Given a username, the method retrieves his/her 
+	 * first name and last name.
+	 * @return The first and last name of the user in a String array of length 2.
+	 * @param The username String representation
+	 */
+	public String[] getFullname(String username) {
+		
+		String[] fullname = new String[2];
+		String query = "SELECT " + KEY_U_FNAME + ", " + KEY_U_LNAME + " FROM " + DATABASE_USER_TABLE + " WHERE username= " + "\""+username+"\""; 
+		Cursor cursor  = ourDB.rawQuery(query, null);
+		if(cursor.moveToFirst()) {
+			fullname[0] = cursor.getString(0);
+			fullname[1] = cursor.getString(1);
+		}
+		
+		cursor.close();
+		
+		return fullname;
+	}
+	
+	/**
+	 * Get birtdate. Retrieve's a user's birthdate in the format dd/mm/yyyy.
+	 * @param The username
+	 * @return The user's birthdate String represenation
+	 */
+	public String getBirthdate(String username) {
+		
+		int date = 0;
+		String stringDate = "";
+		String query = "SELECT " + KEY_U_BORN + " FROM " + DATABASE_USER_TABLE + " WHERE username= " + "\""+username+"\"";
+		Cursor cursor = ourDB.rawQuery(query, null);
+		
+		if(cursor.moveToFirst()) {
+			date = cursor.getInt(0);
+			stringDate = convertIntToStringDate(date);
+		}
+		
+		cursor.close();
+		return stringDate;
+	}
+	
+	/**
+	 * Get a list of ALL the system's users and their corresponding information.
+	 * @param None
+	 * @return A bidimensional String array with ALL the database users
+	 */
+	public String[][] getAllUsers() {
+		
+		String query = "SELECT " + KEY_U_RACEID + ", " + KEY_U_UNAME + ", " + KEY_U_FNAME + ", " + 
+		KEY_U_LNAME +", " + KEY_U_BORN + ", " + KEY_U_EMAIL + ", " + 
+				KEY_U_PHONE + " FROM " +DATABASE_USER_TABLE;
+		Cursor cursor = ourDB.rawQuery(query, null);
+		int numColumns = cursor.getColumnCount();
+		int numRows = cursor.getCount();
+		String[][] users = new String[numRows][numColumns];
+		cursor.moveToFirst();
+		int i = 0;
+		while(!cursor.isAfterLast()) {
+			users[i][0] = String.valueOf(cursor.getInt(0)); //ID
+			users[i][1] = cursor.getString(1); //Username
+			users[i][2] = cursor.getString(2); //First name
+			users[i][3] = cursor.getString(3); //Last name
+			users[i][4] = convertIntToStringDate(cursor.getInt(4)); //Birthdate
+			users[i][5] = cursor.getString(5); //Email
+			users[i][6] = cursor.getString(6); //Phone number
+			i++;
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return users;
+	}
+	
+	/**
+	 * Converts an int date to its String representation. This method takes a date in Integer
+	 * format and returns to its String equivalent using the format dd/mm/yyyy.
+	 * @param The date in Integer format
+	 * @return The date in String format (dd/mm/yyyy)
+	 */
+	public String convertIntToStringDate(int date) {
+		
+		String dateToString = String.valueOf(date);
+		
+		return dateToString.charAt(0)+""+dateToString.charAt(1)+ "/" + dateToString.charAt(2) + 
+				""+dateToString.charAt(3) + "/" + dateToString.charAt(4) + ""+ dateToString.charAt(5) + 
+				""+dateToString.charAt(6) + ""+dateToString.charAt(7);
+	}
+	
+	
+	
+	
 
 }

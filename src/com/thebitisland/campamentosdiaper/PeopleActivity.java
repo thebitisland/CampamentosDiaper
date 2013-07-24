@@ -25,8 +25,6 @@ public class PeopleActivity extends Activity{
 		
 		context = getApplicationContext();
 		database = new DBManager(this);
-		database.open();
-		database.close();
 		generateExpandableListView();
 
 	}
@@ -40,15 +38,17 @@ public class PeopleActivity extends Activity{
 	
 	public void generateExpandableListView(){
 		List<Person> cats = new ArrayList<Person>();
-		cats.add(new Person("Juan Luis Sanz","600600500","Monitor", R.drawable.photo, 1));
-		cats.add(new Person("Álvaro Sánchez Pérez","600500600", "Monitor", R.drawable.photo, 2));
-		cats.add(new Person("Jorge Lavín Montoro","600500500", "Infiltrado", R.drawable.photo, 3));
-		
 		List<List<PersonOptions>> items = new ArrayList<List<PersonOptions>>();
-		List<PersonOptions> persona1 = new ArrayList<PersonOptions>();
-		persona1.add(new PersonOptions(1));
-		items.add(persona1);
+		database.open();
+		String[][] users = database.getAllUsers();
+		for(int i=0;i<users.length;i++) {
+		cats.add(new Person(users[i][2]+" "+users[i][3],users[i][6],"Monitor", R.drawable.photo, 1));
+		List<PersonOptions> persona = new ArrayList<PersonOptions>();
+		persona.add(new PersonOptions(Integer.parseInt(users[i][0])));
+		items.add(persona);
+		}
 		
+		/*
 		List<PersonOptions> persona2 = new ArrayList<PersonOptions>();
 		persona2.add(new PersonOptions(1));
 		items.add(persona2);
@@ -56,7 +56,7 @@ public class PeopleActivity extends Activity{
 		List<PersonOptions> persona3 = new ArrayList<PersonOptions>();
 		persona3.add(new PersonOptions(1));
 		items.add(persona3);
-		
+		*/
 		ExpandableListView exList = (ExpandableListView) findViewById(R.id.people_list);  
 		mAdapter = new PeopleExpandableListAdapter(context, cats, items);
 		exList.setIndicatorBounds(0, 20);
