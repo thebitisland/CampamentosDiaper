@@ -2,6 +2,8 @@ package com.thebitisland.campamentosdiaper.auxClasses;
 
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +69,21 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 	    
 	    final PersonOptions det = childData.get(groupPosition).get(childPosition);
 	    
+	    callBtn.setOnClickListener(new OnClickListener() {
+	    	public void onClick(android.view.View arg0) {
+	    		
+	    		//Get the user's phone number
+	    		database.open();
+	    		String phoneNumber = database.getPhoneNumber((int)det.getID());
+	    		database.close();
+	    		
+	    		//Launch intent
+	    		Intent callIntent = new Intent(Intent.ACTION_DIAL);
+	    		callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    		callIntent.setData(Uri.parse("tel:" + phoneNumber));
+	    		context.startActivity(callIntent);
+	    	}
+	    });
 	    addBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(android.view.View arg0) {
 				
@@ -81,6 +98,21 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 				//Add the new contact to the phone's list
 			}
     	});
+	    
+	    smsBtn.setOnClickListener(new OnClickListener() {
+	    	public void onClick(android.view.View arg0) {
+	    		//Get the user's phone number
+	    		database.open();
+	    		String phoneNumber = database.getPhoneNumber((int)det.getID());
+	    		database.close();
+	    		
+	    		//Launch intent
+	    		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+	    		smsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    		smsIntent.setData(Uri.parse("sms:" + phoneNumber));
+	    		context.startActivity(smsIntent);
+	    	}
+	    });
 	    callBtn = det.getCallButton();
 	    addBtn = det.getAddContactButton();
 	    smsBtn = det.getSMSButton();

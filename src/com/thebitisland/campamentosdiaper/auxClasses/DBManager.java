@@ -242,6 +242,23 @@ public class DBManager {
 				""+dateToString.charAt(6) + ""+dateToString.charAt(7);
 	}
 	
+	/**
+	 * Retrieves a user's phone number.
+	 * @param The username to be looked up
+	 * @return The user's phone number
+	 */
+	public String getPhoneNumber(int userID) {
+		
+		String phoneNumber = "";
+		String query = "SELECT " + KEY_U_PHONE + " FROM " + DATABASE_USER_TABLE + 
+				" WHERE " + KEY_U_RACEID+"= " + userID;      
+		Cursor cursor = ourDB.rawQuery(query, null);
+		if(cursor.moveToFirst()) {
+			phoneNumber = cursor.getString(0);
+		}
+		return phoneNumber;
+	}
+	
 	
 	
 	
