@@ -1,5 +1,7 @@
 package com.thebitisland.campamentosdiaper.auxClasses;
 
+import android.util.Log;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class PersonOptions {
@@ -10,7 +12,7 @@ public class PersonOptions {
     private Button addContact;
     private Button sendSMS;
 	
-    public PersonOptions(long id){
+    public PersonOptions(final long id){
     	this.id=id;
     }
     

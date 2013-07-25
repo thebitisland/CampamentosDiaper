@@ -200,6 +200,34 @@ public class DBManager {
 	}
 	
 	/**
+	 * Get a user's information given his/her table ID.
+	 * @param The user's ID number
+	 * @return A String array with the user information in each item
+	 */
+	public String[] getUserInfo(int userID) {
+		
+		String query = "SELECT " + KEY_U_FNAME + ", " + 
+		KEY_U_LNAME +", " + KEY_U_BORN + ", " + KEY_U_EMAIL + ", " + 
+				KEY_U_PHONE + " FROM " +DATABASE_USER_TABLE + " WHERE " + KEY_U_RACEID +"= "+userID;
+		Cursor cursor = ourDB.rawQuery(query, null);
+		int numColumns = cursor.getColumnCount();
+		String[] user = new String[numColumns];
+		cursor.moveToFirst();
+		int i = 0;
+		if(cursor.moveToFirst()) {
+			user[0] = cursor.getString(0)+ " "+cursor.getString(1);; //First name
+			user[1] = convertIntToStringDate(cursor.getInt(2)); //Birthdate
+			user[2] = cursor.getString(3); //Email
+			user[3] = cursor.getString(4); //Phone number
+		}
+		
+		cursor.close();
+		return user;
+	}
+	
+	
+	
+	/**
 	 * Converts an int date to its String representation. This method takes a date in Integer
 	 * format and returns to its String equivalent using the format dd/mm/yyyy.
 	 * @param The date in Integer format
@@ -213,6 +241,8 @@ public class DBManager {
 				""+dateToString.charAt(3) + "/" + dateToString.charAt(4) + ""+ dateToString.charAt(5) + 
 				""+dateToString.charAt(6) + ""+dateToString.charAt(7);
 	}
+	
+	
 	
 	
 	

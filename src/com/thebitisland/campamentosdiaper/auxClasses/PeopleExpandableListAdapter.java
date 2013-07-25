@@ -1,14 +1,20 @@
 package com.thebitisland.campamentosdiaper.auxClasses;
 
+import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thebitisland.campamentosdiaper.R;
@@ -24,6 +30,8 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 	private List<Person> groupData;
 	private List<List<PersonOptions>> childData;
 	private Context context;
+	DBManager database;
+
 
 	private LayoutInflater inflater;
 
@@ -31,6 +39,7 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 		this.groupData = groupData;
 		this.childData = childData;
 		this.context=context;
+		database = new DBManager(this.context);
 	}
 
 	public Object getChild(int groupPosition, int childPosition) {
@@ -56,8 +65,22 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 	    Button addBtn = (Button) v.findViewById(R.id.addcontact_button);
 	    Button smsBtn = (Button) v.findViewById(R.id.sms_button);
 	    
-	    PersonOptions det = childData.get(groupPosition).get(childPosition);
+	    final PersonOptions det = childData.get(groupPosition).get(childPosition);
 	    
+	    addBtn.setOnClickListener(new OnClickListener() {
+			public void onClick(android.view.View arg0) {
+				
+				//Get the user info using its ID
+				database.open();
+				String[] user = database.getUserInfo((int)det.getID());
+				Log.d("callBtn", "User with id="+det.getID()+": "+user[0]+" "+user[1]+" "+user[2]+" "+user[3]);
+				database.close();
+				
+				//Fill the Contact Provider with the basic user info
+				addContact(user);
+				//Add the new contact to the phone's list
+			}
+    	});
 	    callBtn = det.getCallButton();
 	    addBtn = det.getAddContactButton();
 	    smsBtn = det.getSMSButton();
@@ -164,6 +187,72 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 
 	public LayoutInflater getInflater() {
 		return inflater;
+	}
+	
+	/*http://stackoverflow.com/questions/6265420/how-to-add-contact-detial-through-code-in-contact-list-of-android-phone*/
+	public void addContact(String[] contact) {
+		
+		/* Retrieve the new contact's info */
+		String contactName = contact[0];
+		String contactBirthdate = contact[1];
+		String contactEmail = contact[2];
+		String contactPhone = contact[3];
+		
+		/* Create the Android Contact base structure */
+		ArrayList<ContentProviderOperation> data = new ArrayList<ContentProviderOperation>();
+        data.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
+        
+        /* Add the new contact name to Contact structure */
+        data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contactName).build());
+        
+        /* Add the new contact's birthdate to Contact structure */
+        data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Event.TYPE, 
+                        ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY)
+                .withValue(ContactsContract.CommonDataKinds.Event.START_DATE, contactBirthdate)
+                .build());
+        
+        /* Add the new contact's mobile number to Contact structure */
+        data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, contactPhone)
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, 
+                        ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+                .build());
+        
+        /* Add the new contact's email address to the Contact structure */
+        data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Email.DATA, contactEmail)
+                .withValue(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_HOME)
+                .build());
+        
+     // Asking the Contact provider to create a new contact                  
+        try 
+        {
+            context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, data);
+        } 
+        catch (Exception e) 
+        {               
+            e.printStackTrace();
+            Toast.makeText(context, "Could not add new contact", Toast.LENGTH_SHORT).show();
+        }
+        
+        Toast.makeText(context, "New contact added", Toast.LENGTH_SHORT).show();
 	}
 
 }
