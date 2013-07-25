@@ -1,6 +1,20 @@
 package com.thebitisland.campamentosdiaper;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.apache.http.util.ByteArrayBuffer;
+
 import com.thebitisland.campamentosdiaper.auxClasses.DBManager;
+import com.thebitisland.campamentosdiaper.auxClasses.DownloadDatabase;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -24,7 +38,7 @@ public class LoginActivity extends Activity {
 	Boolean loginOK, camp;
 	ImageView logo;
 	Context context;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +50,11 @@ public class LoginActivity extends Activity {
 		password_field = (EditText) findViewById(R.id.password_field);
 		login_button = (Button) findViewById(R.id.login_button);
 		logo = (ImageView) findViewById(R.id.logo);
+		
+		DownloadDatabase thread = new DownloadDatabase();
+		thread.execute();
 
+		
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
 		final View activityRootView = (View) findViewById(android.R.id.content);
 		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -77,6 +95,7 @@ public class LoginActivity extends Activity {
 				}*/ 
 				
 				if(checkUsername(user, pass)){
+					
 					Intent login = new Intent(context, CampActivity.class);
 					startActivity(login);
 					finish();	

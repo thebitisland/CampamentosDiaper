@@ -226,9 +226,9 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 		
 		/* Retrieve the new contact's info */
 		String contactName = contact[0];
-		String contactBirthdate = contact[1];
-		String contactEmail = contact[2];
-		String contactPhone = contact[3];
+		//String contactBirthdate = contact[1];
+		String contactEmail = contact[1];
+		String contactPhone = contact[2];
 		
 		/* Create the Android Contact base structure */
 		ArrayList<ContentProviderOperation> data = new ArrayList<ContentProviderOperation>();
@@ -245,7 +245,7 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contactName).build());
         
         /* Add the new contact's birthdate to Contact structure */
-        data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+        /*data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
                 .withValue(ContactsContract.Data.MIMETYPE,
                         ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)
@@ -253,6 +253,7 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
                         ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY)
                 .withValue(ContactsContract.CommonDataKinds.Event.START_DATE, contactBirthdate)
                 .build());
+        */
         
         /* Add the new contact's mobile number to Contact structure */
         data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)

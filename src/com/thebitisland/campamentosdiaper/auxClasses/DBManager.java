@@ -36,7 +36,7 @@ public class DBManager {
 	public static final String KEY_U_UNAME = "username";
 	public static final String KEY_U_FNAME = "first_name";
 	public static final String KEY_U_LNAME = "last_name";
-	public static final String KEY_U_BORN = "date_of_birth";
+	public static final String KEY_U_PHOTO = "photo";
 	public static final String KEY_U_EMAIL = "email";
 	public static final String KEY_U_PHONE = "phone";
 
@@ -63,7 +63,7 @@ public class DBManager {
 					+ KEY_U_UNAME + " VARCHAR,"
 					+ KEY_U_FNAME + " VARCHAR," 
 					+ KEY_U_LNAME + " VARCHAR, " 
-					+ KEY_U_BORN + " INTEGER," 
+					+ KEY_U_PHOTO + " TEXT," 
 					+ KEY_U_EMAIL + " VARCHAR," 
 					+ KEY_U_PHONE + " VARCHAR"
 					+ ");");
@@ -77,8 +77,8 @@ public class DBManager {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
-			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_USER_TABLE);
-			onCreate(db);
+			//db.execSQL("DROP TABLE IF EXISTS " + DATABASE_USER_TABLE);
+			//onCreate(db);
 		}
 	}
 
@@ -151,7 +151,7 @@ public class DBManager {
 	 * @param The username
 	 * @return The user's birthdate String represenation
 	 */
-	public String getBirthdate(String username) {
+	/*public String getBirthdate(String username) {
 		
 		int date = 0;
 		String stringDate = "";
@@ -165,7 +165,7 @@ public class DBManager {
 		
 		cursor.close();
 		return stringDate;
-	}
+	}*/
 	
 	/**
 	 * Get a list of ALL the system's users and their corresponding information.
@@ -175,7 +175,7 @@ public class DBManager {
 	public String[][] getAllUsers() {
 		
 		String query = "SELECT " + KEY_U_RACEID + ", " + KEY_U_UNAME + ", " + KEY_U_FNAME + ", " + 
-		KEY_U_LNAME +", " + KEY_U_BORN + ", " + KEY_U_EMAIL + ", " + 
+		KEY_U_LNAME + ", " + KEY_U_EMAIL + ", " + 
 				KEY_U_PHONE + " FROM " +DATABASE_USER_TABLE;
 		Cursor cursor = ourDB.rawQuery(query, null);
 		int numColumns = cursor.getColumnCount();
@@ -188,9 +188,9 @@ public class DBManager {
 			users[i][1] = cursor.getString(1); //Username
 			users[i][2] = cursor.getString(2); //First name
 			users[i][3] = cursor.getString(3); //Last name
-			users[i][4] = convertIntToStringDate(cursor.getInt(4)); //Birthdate
-			users[i][5] = cursor.getString(5); //Email
-			users[i][6] = cursor.getString(6); //Phone number
+			//users[i][4] = convertIntToStringDate(cursor.getInt(4)); //Birthdate
+			users[i][4] = cursor.getString(4); //Email
+			users[i][5] = cursor.getString(5); //Phone number
 			i++;
 			cursor.moveToNext();
 		}
@@ -207,7 +207,7 @@ public class DBManager {
 	public String[] getUserInfo(int userID) {
 		
 		String query = "SELECT " + KEY_U_FNAME + ", " + 
-		KEY_U_LNAME +", " + KEY_U_BORN + ", " + KEY_U_EMAIL + ", " + 
+		KEY_U_LNAME + ", " + KEY_U_EMAIL + ", " + 
 				KEY_U_PHONE + " FROM " +DATABASE_USER_TABLE + " WHERE " + KEY_U_RACEID +"= "+userID;
 		Cursor cursor = ourDB.rawQuery(query, null);
 		int numColumns = cursor.getColumnCount();
@@ -216,9 +216,9 @@ public class DBManager {
 		int i = 0;
 		if(cursor.moveToFirst()) {
 			user[0] = cursor.getString(0)+ " "+cursor.getString(1);; //First name
-			user[1] = convertIntToStringDate(cursor.getInt(2)); //Birthdate
-			user[2] = cursor.getString(3); //Email
-			user[3] = cursor.getString(4); //Phone number
+			//user[1] = convertIntToStringDate(cursor.getInt(2)); //Birthdate
+			user[1] = cursor.getString(2); //Email
+			user[2] = cursor.getString(3); //Phone number
 		}
 		
 		cursor.close();
