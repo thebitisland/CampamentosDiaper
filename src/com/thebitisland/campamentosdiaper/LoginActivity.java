@@ -22,9 +22,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,9 +55,11 @@ public class LoginActivity extends Activity {
 		login_button = (Button) findViewById(R.id.login_button);
 		logo = (ImageView) findViewById(R.id.logo);
 		
+		setupUI(findViewById(R.id.parent));
+		
 		DownloadDatabase thread = new DownloadDatabase();
 		thread.execute();
-
+		
 		
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
 		final View activityRootView = (View) findViewById(android.R.id.content);
@@ -138,6 +144,43 @@ public class LoginActivity extends Activity {
 		
 		return userCheck && passCheck;
 		
+	}
+	
+	
+	
+	public void setupUI(View view) {
+
+	    //Set up touch listener for non-text box views to hide keyboard.
+	    if(!(view instanceof EditText)) {
+ 
+	        view.setOnTouchListener(new OnTouchListener() {
+	        	@Override
+	            public boolean onTouch(View v, MotionEvent event) {
+	        		hideSoftKeyboard();
+	                return false;
+	            }
+
+			
+	
+
+	        });
+	    }
+
+	    //If a layout container, iterate over children and seed recursion.
+	    if (view instanceof ViewGroup) {
+
+	        for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+	            View innerView = ((ViewGroup) view).getChildAt(i);
+
+	            setupUI(innerView);
+	        }
+	    }
+	}
+	
+	public void hideSoftKeyboard() {
+	    InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 	}
 
 }
