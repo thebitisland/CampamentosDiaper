@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
 	Boolean loginOK, camp;
 	ImageView logo;
 	Context context;
-	
+	DBManager database;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,6 +54,9 @@ public class LoginActivity extends Activity {
 		password_field = (EditText) findViewById(R.id.password_field);
 		login_button = (Button) findViewById(R.id.login_button);
 		logo = (ImageView) findViewById(R.id.logo);
+		database = new DBManager(this);
+		database.open();
+		database.close();
 		
 		setupUI(findViewById(R.id.parent));
 		
