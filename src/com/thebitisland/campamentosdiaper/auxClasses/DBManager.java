@@ -175,7 +175,7 @@ public class DBManager {
 	public String[][] getAllUsers() {
 		
 		String query = "SELECT " + KEY_U_RACEID + ", " + KEY_U_UNAME + ", " + KEY_U_FNAME + ", " + 
-		KEY_U_LNAME + ", " + KEY_U_EMAIL + ", " + 
+		KEY_U_LNAME + ", " + KEY_U_PHOTO + "," + KEY_U_EMAIL + ", " + 
 				KEY_U_PHONE + " FROM " +DATABASE_USER_TABLE;
 		Cursor cursor = ourDB.rawQuery(query, null);
 		int numColumns = cursor.getColumnCount();
@@ -188,9 +188,9 @@ public class DBManager {
 			users[i][1] = cursor.getString(1); //Username
 			users[i][2] = cursor.getString(2); //First name
 			users[i][3] = cursor.getString(3); //Last name
-			//users[i][4] = convertIntToStringDate(cursor.getInt(4)); //Birthdate
-			users[i][4] = cursor.getString(4); //Email
-			users[i][5] = cursor.getString(5); //Phone number
+			users[i][4] = cursor.getString(4); //Photo
+			users[i][5] = cursor.getString(5); //Email
+			users[i][6] = cursor.getString(6); //Phone number
 			i++;
 			cursor.moveToNext();
 		}

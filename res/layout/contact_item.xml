@@ -15,8 +15,8 @@
         <!-- Person's image -->
         <ImageView
             android:id="@+id/contact_image"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/personal_button"/>
  
     </LinearLayout>

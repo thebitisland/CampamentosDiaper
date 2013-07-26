@@ -52,7 +52,14 @@ public class PeopleActivity extends Activity{
 		database.open();
 		String[][] users = database.getAllUsers();
 		for(int i=0;i<users.length;i++) {
-		cats.add(new Person(users[i][2]+" "+users[i][3],users[i][5],"Monitor", R.drawable.photo, 1));
+			Bitmap photo = null;
+			if(users[i][4]!=null) {
+				photo = getBitMap(users[i][4]);
+			} else {
+				photo = BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.photo);
+			}
+		cats.add(new Person(users[i][2]+" "+users[i][3],users[i][6],"Monitor", photo, 1));
 		List<PersonOptions> persona = new ArrayList<PersonOptions>();
 		persona.add(new PersonOptions(Integer.parseInt(users[i][0])));
 		items.add(persona);

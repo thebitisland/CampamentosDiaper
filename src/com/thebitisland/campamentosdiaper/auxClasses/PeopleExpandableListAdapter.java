@@ -176,7 +176,7 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 		    TextView occupation = (TextView) v.findViewById(R.id.occupation);
 		    Person cat = groupData.get(groupPosition);
 
-		    photo.setImageResource(cat.getPhoto());
+		    photo.setImageBitmap(cat.getPhoto());
 		    fullname.setText(cat.getFullName());
 		    telephone.setText(cat.getTelephone());
 		    occupation.setText(cat.getOccupation());
