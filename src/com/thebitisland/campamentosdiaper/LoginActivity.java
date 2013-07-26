@@ -32,13 +32,14 @@ public class LoginActivity extends Activity {
 	EditText user_field;
 	EditText password_field;
 	Button login_button;
-	Boolean loginOK, camp;
+	Boolean loginOK;
 	ImageView logo;
 	Context context;
 	DBManager database;
 	SharedPreferences prefs;
 	boolean isConnected;
-	
+	String user, pass;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public class LoginActivity extends Activity {
 		context = getApplicationContext();
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		isConnected = checkInternetConnection(context);
-		
+
 		user_field = (EditText) findViewById(R.id.user_field);
 		password_field = (EditText) findViewById(R.id.password_field);
 		login_button = (Button) findViewById(R.id.login_button);
@@ -55,14 +56,21 @@ public class LoginActivity extends Activity {
 		database = new DBManager(this);
 		database.open();
 		database.close();
-		
+
 		setupUI(findViewById(R.id.parent));
-		
-		if(isConnected){
-		DownloadDatabase thread = new DownloadDatabase(prefs);
-		thread.execute();
+
+		if (isConnected) {
+			DownloadDatabase thread = new DownloadDatabase(prefs);
+			thread.execute();
 		}
-		
+
+		loginOK = prefs.getBoolean("loginOK", false);
+		if(loginOK){
+			/* I logged already */
+			Intent login = new Intent(context, CampActivity.class);
+			startActivity(login);
+			finish();
+		}
 		
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
 		final View activityRootView = (View) findViewById(android.R.id.content);
@@ -82,32 +90,18 @@ public class LoginActivity extends Activity {
 
 		login_button.setOnClickListener(new OnClickListener() {
 			public void onClick(android.view.View arg0) {
-				String user = user_field.getText().toString();
-				String pass = password_field.getText().toString();
+				user = user_field.getText().toString();
+				pass = password_field.getText().toString();
 
-				/*
-				 * El usuario esta en un campamento? Se puede devolver en la
-				 * misma query del login? Esto era para opci�n Alvaro,
-				 * implementando Nico de momento
-				 */
-				
-				
-				/*
-				if (loginOK == true && camp == true) {
+				if (checkUsername(user, pass)) {
+					/* Remember me */
+					SharedPreferences.Editor editor = prefs.edit();
+					editor.putBoolean("loginOK", true);
+					editor.commit();
+
 					Intent login = new Intent(context, CampActivity.class);
 					startActivity(login);
 					finish();
-				} else if (loginOK == true && camp == false) {
-					Intent login = new Intent(context, HomeActivity.class);
-					startActivity(login);
-					finish();
-				}*/ 
-				
-				if(checkUsername(user, pass)){
-					
-					Intent login = new Intent(context, CampActivity.class);
-					startActivity(login);
-					finish();	
 				} else {
 					CharSequence text = "Error en usuario/password!";
 					int duration = Toast.LENGTH_SHORT;
@@ -125,80 +119,80 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
+
 	public boolean checkUsername(String username, String password) {
-		
-		if(username.equals("") || password.equals("") || username == null || password == null) {
-			Toast.makeText(context, "The user/password field cannot be empty", Toast.LENGTH_SHORT).show();
+
+		if (username.equals("") || password.equals("") || username == null
+				|| password == null) {
+			Toast.makeText(context, "The user/password field cannot be empty",
+					Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		//Open database
+		// Open database
 		DBManager db = new DBManager(context);
 		db.open();
-		
-		//Search for username. If it does not exist return false.
+
+		// Search for username. If it does not exist return false.
 		boolean userCheck = db.checkUsername(username);
 
-		//Check password. If it does not match the default one, return false.
+		// Check password. If it does not match the default one, return false.
 		boolean passCheck = password.equals("santonia2013");
-		
-		//Close the database
+
+		// Close the database
 		db.close();
-		
+
 		return userCheck && passCheck;
-		
+
 	}
-	
-	
-	
+
 	public void setupUI(View view) {
 
-	    //Set up touch listener for non-text box views to hide keyboard.
-	    if(!(view instanceof EditText)) {
- 
-	        view.setOnTouchListener(new OnTouchListener() {
-	        	@Override
-	            public boolean onTouch(View v, MotionEvent event) {
-	        		hideSoftKeyboard();
-	                return false;
-	            }
+		// Set up touch listener for non-text box views to hide keyboard.
+		if (!(view instanceof EditText)) {
 
-			
-	
+			view.setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					hideSoftKeyboard();
+					return false;
+				}
 
-	        });
-	    }
+			});
+		}
 
-	    //If a layout container, iterate over children and seed recursion.
-	    if (view instanceof ViewGroup) {
+		// If a layout container, iterate over children and seed recursion.
+		if (view instanceof ViewGroup) {
 
-	        for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
 
-	            View innerView = ((ViewGroup) view).getChildAt(i);
+				View innerView = ((ViewGroup) view).getChildAt(i);
 
-	            setupUI(innerView);
-	        }
-	    }
-	}
-	
-	public void hideSoftKeyboard() {
-	    InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-	    inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
-	}
-	
-	private boolean checkInternetConnection(Context ctx) {
-		
-			ConnectivityManager conn =
-			        (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-			 
-			NetworkInfo activeNetworkInfo = conn.getActiveNetworkInfo();			
-			/* No Internet? Show dialog and Intent to system's settings */
-			if(activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-				return true;
+				setupUI(innerView);
 			}
-			
-			Toast.makeText(context, "No Internet connection. Enjoy a local use!", Toast.LENGTH_SHORT).show();
-			return false;
+		}
+	}
+
+	public void hideSoftKeyboard() {
+		InputMethodManager inputMethodManager = (InputMethodManager) this
+				.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus()
+				.getWindowToken(), 0);
+	}
+
+	private boolean checkInternetConnection(Context ctx) {
+
+		ConnectivityManager conn = (ConnectivityManager) ctx
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		NetworkInfo activeNetworkInfo = conn.getActiveNetworkInfo();
+		/* No Internet? Show dialog and Intent to system's settings */
+		if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+			return true;
+		}
+
+		Toast.makeText(context, "No Internet connection. Enjoy a local use!",
+				Toast.LENGTH_SHORT).show();
+		return false;
 	}
 
 }

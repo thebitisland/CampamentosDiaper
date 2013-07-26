@@ -3,8 +3,8 @@
 
     <string name="app_name">DIAPER Camps</string>
     <string name="login_settings_1">Recordar contraseña</string>
-    <string name="home_settings_1">Desconectarse</string>
-    <string name="home_settings_2">Opciones</string>
+    <string name="home_settings_logoff">Desconectarse</string>
+    <string name="home_settings_options">Opciones</string>
     <string name="user_field">Usuario</string>
     <string name="password_field">Password</string>
     <string name="login_button">Entrar</string>
