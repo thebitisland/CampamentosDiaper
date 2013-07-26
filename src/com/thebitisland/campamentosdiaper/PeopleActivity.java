@@ -87,6 +87,8 @@ public class PeopleActivity extends Activity{
 		exList.setIndicatorBounds(0, 20);
 		exList.setAdapter(mAdapter);
 	}
+	
+	/*Generate PNG bitmap from bitmap */
 	private static Bitmap codec(Bitmap src, Bitmap.CompressFormat format,
 			int quality) {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -96,7 +98,7 @@ public class PeopleActivity extends Activity{
 		return BitmapFactory.decodeByteArray(array, 0, array.length);
 	}
 	
-	
+	/*Generate bitmap from string given from DB */
 	private static Bitmap getBitMap(String name){
 		
 		Bitmap bitmap;
