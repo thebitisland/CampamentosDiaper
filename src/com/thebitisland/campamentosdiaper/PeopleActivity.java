@@ -1,5 +1,6 @@
 package com.thebitisland.campamentosdiaper;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListAdapter;
@@ -53,6 +58,14 @@ public class PeopleActivity extends Activity{
 		items.add(persona);
 		}
 		
+
+		//Bitmap bmp = getBitMap(String name);
+
+		//Bitmap bPNGcompress = codec(bmp, Bitmap.CompressFormat.PNG, 0);
+
+		//int h = bmp.getHeight();
+		
+		//Log.d("altura",""+h);
 		/*
 		List<PersonOptions> persona2 = new ArrayList<PersonOptions>();
 		persona2.add(new PersonOptions(1));
@@ -67,6 +80,28 @@ public class PeopleActivity extends Activity{
 		exList.setIndicatorBounds(0, 20);
 		exList.setAdapter(mAdapter);
 	}
+	private static Bitmap codec(Bitmap src, Bitmap.CompressFormat format,
+			int quality) {
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		src.compress(format, quality, os);
+ 
+		byte[] array = os.toByteArray();
+		return BitmapFactory.decodeByteArray(array, 0, array.length);
+	}
 	
+	
+	private static Bitmap getBitMap(String name){
+		
+		Bitmap bitmap;
+		
+		byte[] decodedString;       
+
+		decodedString = Base64.decode(name, Base64.DEFAULT);
+		bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+		return bitmap;
+	}
+	
+	
+ 
 }
 
