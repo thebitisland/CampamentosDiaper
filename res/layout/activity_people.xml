@@ -5,13 +5,13 @@
     android:background="@drawable/gradient" >
 
     <ImageView
-        android:id="@+id/nature_background"
+        android:id="@+id/people_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="center"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
-        android:src="@drawable/nature_background" />
+        android:src="@drawable/people_background" />
     
     <ExpandableListView
         android:id="@+id/people_list"
