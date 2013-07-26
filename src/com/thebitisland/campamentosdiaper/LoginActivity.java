@@ -1,25 +1,18 @@
 package com.thebitisland.campamentosdiaper;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
-import org.apache.http.util.ByteArrayBuffer;
-
 import com.thebitisland.campamentosdiaper.auxClasses.DBManager;
 import com.thebitisland.campamentosdiaper.auxClasses.DownloadDatabase;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -43,13 +36,18 @@ public class LoginActivity extends Activity {
 	ImageView logo;
 	Context context;
 	DBManager database;
+	SharedPreferences prefs;
+	boolean isConnected;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
 		context = getApplicationContext();
-
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		isConnected = checkInternetConnection(context);
+		
 		user_field = (EditText) findViewById(R.id.user_field);
 		password_field = (EditText) findViewById(R.id.password_field);
 		login_button = (Button) findViewById(R.id.login_button);
@@ -60,8 +58,10 @@ public class LoginActivity extends Activity {
 		
 		setupUI(findViewById(R.id.parent));
 		
-		DownloadDatabase thread = new DownloadDatabase();
+		if(isConnected){
+		DownloadDatabase thread = new DownloadDatabase(prefs);
 		thread.execute();
+		}
 		
 		
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
@@ -184,6 +184,21 @@ public class LoginActivity extends Activity {
 	public void hideSoftKeyboard() {
 	    InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
 	    inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+	}
+	
+	private boolean checkInternetConnection(Context ctx) {
+		
+			ConnectivityManager conn =
+			        (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+			 
+			NetworkInfo activeNetworkInfo = conn.getActiveNetworkInfo();			
+			/* No Internet? Show dialog and Intent to system's settings */
+			if(activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+				return true;
+			}
+			
+			Toast.makeText(context, "No Internet connection. Enjoy a local use!", Toast.LENGTH_SHORT).show();
+			return false;
 	}
 
 }
