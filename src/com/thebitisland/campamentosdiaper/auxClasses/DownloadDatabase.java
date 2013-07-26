@@ -76,6 +76,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 	private boolean checkDatabaseVersion() throws ParseException, IOException {
 		        
         int databaseVersion = prefs.getInt("DBVersion", 0);
+        Log.d("databaseVersion", "The current DB is v"+databaseVersion);
         
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(database_version);
