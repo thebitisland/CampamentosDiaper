@@ -3,6 +3,7 @@ package com.thebitisland.campamentosdiaper.auxClasses;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,7 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 	    Button smsBtn = (Button) v.findViewById(R.id.sms_button);
 	    
 	    final PersonOptions det = childData.get(groupPosition).get(childPosition);
+	    final Bitmap photo = groupData.get(groupPosition).getPhoto();
 	    
 	    callBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(android.view.View arg0) {
@@ -94,7 +97,7 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 				database.close();
 				
 				//Fill the Contact Provider with the basic user info
-				addContact(user);
+				addContact(user, photo);
 				//Add the new contact to the phone's list
 			}
     	});
@@ -222,14 +225,17 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
 	}
 	
 	/*http://stackoverflow.com/questions/6265420/how-to-add-contact-detial-through-code-in-contact-list-of-android-phone*/
-	public void addContact(String[] contact) {
+	public void addContact(String[] contact, Bitmap contactPhoto) {
 		
 		/* Retrieve the new contact's info */
 		String contactName = contact[0];
 		//String contactBirthdate = contact[1];
 		String contactEmail = contact[1];
 		String contactPhone = contact[2];
-		
+		Log.d("addContact", ""+contactPhoto);
+		ByteArrayOutputStream image = new ByteArrayOutputStream();
+        contactPhoto.compress(Bitmap.CompressFormat.PNG , 100, image);
+        
 		/* Create the Android Contact base structure */
 		ArrayList<ContentProviderOperation> data = new ArrayList<ContentProviderOperation>();
         data.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
@@ -244,16 +250,13 @@ public class PeopleExpandableListAdapter extends BaseExpandableListAdapter {
                         ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contactName).build());
         
-        /* Add the new contact's birthdate to Contact structure */
-        /*data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+        /* Add the new contact's photo to Contact structure */
+        data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
                 .withValue(ContactsContract.Data.MIMETYPE,
-                        ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Event.TYPE, 
-                        ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY)
-                .withValue(ContactsContract.CommonDataKinds.Event.START_DATE, contactBirthdate)
-                .build());
-        */
+                        ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, image.toByteArray()).build());
+     
         
         /* Add the new contact's mobile number to Contact structure */
         data.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
