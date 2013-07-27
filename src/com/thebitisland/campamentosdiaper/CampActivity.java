@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class CampActivity extends Activity {
 
@@ -20,13 +21,18 @@ public class CampActivity extends Activity {
 	Button mapButton;
 	Button peopleList;
 	SharedPreferences prefs;
+	TextView dbversion;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camp);
 
 		context = getApplicationContext();
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
+		dbversion = (TextView) findViewById(R.id.dbversion);
+		dbversion.setText("v."+String.valueOf(prefs.getInt("DBVersion", 0)));
+		
 		peopleList = (Button) findViewById(R.id.personal_button);
 		peopleList.setOnClickListener(new OnClickListener() {
 
@@ -71,7 +77,6 @@ public class CampActivity extends Activity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.home_settings_logoff:
-			prefs = PreferenceManager.getDefaultSharedPreferences(context);
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putBoolean("loginOK", false);
 			editor.commit();

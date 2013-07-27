@@ -100,6 +100,15 @@
         </TableRow>
     </TableLayout>
 
+    <TextView 
+        android:id="@+id/dbversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:textSize="14sp"
+		android:layout_marginRight="2dp"
+		android:textColor="@color/light_text"/>
     <Button
         android:id="@+id/camps_button"
         android:layout_width="45dp"
