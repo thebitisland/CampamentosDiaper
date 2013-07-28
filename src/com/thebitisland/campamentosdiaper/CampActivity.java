@@ -1,5 +1,8 @@
 package com.thebitisland.campamentosdiaper;
 
+import com.thebitisland.campamentosdiaper.auxClasses.AuxMethods;
+import com.thebitisland.campamentosdiaper.auxClasses.DownloadDatabase;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +25,7 @@ public class CampActivity extends Activity {
 	Button peopleList;
 	SharedPreferences prefs;
 	TextView dbversion;
+	Boolean isConnected;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,8 +35,15 @@ public class CampActivity extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 		dbversion = (TextView) findViewById(R.id.dbversion);
-		dbversion.setText("v."+String.valueOf(prefs.getInt("DBVersion", 0)));
+		dbversion.setText("v."+String.valueOf(prefs.getInt("DBVersion", 0)/10));
 		
+		isConnected = AuxMethods.checkInternetConnection(context);
+		
+		if (isConnected) {
+			DownloadDatabase thread = new DownloadDatabase(prefs, this);
+			thread.execute();
+		}
+
 		peopleList = (Button) findViewById(R.id.personal_button);
 		peopleList.setOnClickListener(new OnClickListener() {
 

@@ -1,5 +1,6 @@
 package com.thebitisland.campamentosdiaper;
 
+import com.thebitisland.campamentosdiaper.auxClasses.AuxMethods;
 import com.thebitisland.campamentosdiaper.auxClasses.DBManager;
 import com.thebitisland.campamentosdiaper.auxClasses.DownloadDatabase;
 
@@ -47,7 +48,7 @@ public class LoginActivity extends Activity {
 
 		context = getApplicationContext();
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		isConnected = checkInternetConnection(context);
+		isConnected = AuxMethods.checkInternetConnection(context);
 
 		user_field = (EditText) findViewById(R.id.user_field);
 		password_field = (EditText) findViewById(R.id.password_field);
@@ -59,19 +60,19 @@ public class LoginActivity extends Activity {
 
 		setupUI(findViewById(R.id.parent));
 
-		if (isConnected) {
-			DownloadDatabase thread = new DownloadDatabase(prefs, this);
-			thread.execute();
-		}
-
 		loginOK = prefs.getBoolean("loginOK", false);
-		if(loginOK){
+		if (loginOK) {
 			/* I logged already */
 			Intent login = new Intent(context, CampActivity.class);
 			startActivity(login);
 			finish();
 		}
-		
+
+		if (isConnected) {
+			DownloadDatabase thread = new DownloadDatabase(prefs, this);
+			thread.execute();
+		}
+
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
 		final View activityRootView = (View) findViewById(android.R.id.content);
 		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -177,22 +178,6 @@ public class LoginActivity extends Activity {
 				.getSystemService(Activity.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus()
 				.getWindowToken(), 0);
-	}
-
-	private boolean checkInternetConnection(Context ctx) {
-
-		ConnectivityManager conn = (ConnectivityManager) ctx
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		NetworkInfo activeNetworkInfo = conn.getActiveNetworkInfo();
-		/* No Internet? Show dialog and Intent to system's settings */
-		if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-			return true;
-		}
-
-		Toast.makeText(context, "No Internet connection. Enjoy a local use!",
-				Toast.LENGTH_SHORT).show();
-		return false;
 	}
 
 }
