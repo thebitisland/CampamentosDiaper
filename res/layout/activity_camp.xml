@@ -5,13 +5,13 @@
     android:background="@drawable/gradient" >
 
     <ImageView
-        android:id="@+id/nature_background"
+        android:id="@+id/nature_background2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
         android:scaleType="center"
-        android:src="@drawable/nature_background" />
+        android:src="@drawable/nature_background2" />
 
     <TextView
         android:id="@+id/camp_name"
