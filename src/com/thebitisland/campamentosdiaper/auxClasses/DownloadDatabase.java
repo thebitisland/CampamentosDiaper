@@ -17,7 +17,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.thebitisland.campamentosdiaper.R;
 
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -30,10 +33,31 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 	private final String database_folder = "/data/data/com.thebitisland.campamentosdiaper/databases/";
 	private final String database_version = "http://camps.thebitisland.com/DBversion";
 	SharedPreferences prefs;
+	Context context;
+	ProgressDialog pDialog;
 	
-	public DownloadDatabase(SharedPreferences prefs) {
+	public DownloadDatabase(SharedPreferences prefs, Context context) {
 		this.prefs = prefs;
+		this.context = context;
+		pDialog = new ProgressDialog(context);
+		pDialog.setIndeterminate(false);
+		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setCancelable(true);
+		pDialog.setMessage(context.getResources().getString(R.string.check_version));
+
 	}
+	
+	@Override
+	protected void onProgressUpdate(Void... values) {
+		// TODO Auto-generated method stub
+        pDialog.setMessage(context.getResources().getString(R.string.download_db));
+	}
+
+	@Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        pDialog.show();
+    }
 	
 	@Override
 	protected Void doInBackground(Void... arg0) {
@@ -41,8 +65,10 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		String filename = "CampsDB.db";
 		
 		try {
-			if(!checkDatabaseVersion())
+			if(!checkDatabaseVersion()){
+				pDialog.dismiss();
 				return null;
+			}
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -52,7 +78,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		}
         
         try {
-
+        publishProgress();
         URL input = new URL(DATABASE_URL);
         URLConnection conn = input.openConnection();
         int contentLength = conn.getContentLength();
@@ -66,7 +92,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
         output.write(buffer);
         output.flush();
         output.close();
-        
+        pDialog.dismiss();
         } catch(FileNotFoundException e) {
         } catch (IOException e) {
         }
@@ -74,7 +100,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 	}
 	
 	private boolean checkDatabaseVersion() throws ParseException, IOException {
-		        
+		
         int databaseVersion = prefs.getInt("DBVersion", 0);
         Log.d("databaseVersion", "The current DB is v"+databaseVersion);
         

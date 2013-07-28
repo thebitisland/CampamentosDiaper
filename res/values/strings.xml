@@ -10,5 +10,9 @@
     <string name="login_button">Entrar</string>
     <string name="camp_name">Santoña</string>
     <string name="camp_descr">01.08.2013 - 15.08.2013</string>
+    
+    <!-- Spinner dialog texts -->
+    <string name="check_version">Comprobando versión de base de datos...</string>
+    <string name="download_db">Descargando nueva base de datos...</string>
 
 </resources>

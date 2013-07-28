@@ -60,7 +60,7 @@ public class LoginActivity extends Activity {
 		setupUI(findViewById(R.id.parent));
 
 		if (isConnected) {
-			DownloadDatabase thread = new DownloadDatabase(prefs);
+			DownloadDatabase thread = new DownloadDatabase(prefs, this);
 			thread.execute();
 		}
 

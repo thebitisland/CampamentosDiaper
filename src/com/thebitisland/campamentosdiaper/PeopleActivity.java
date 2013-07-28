@@ -81,6 +81,7 @@ public class PeopleActivity extends Activity{
 		mAdapter = new PeopleExpandableListAdapter(context, cats, items);
 		exList.setIndicatorBounds(0, 20);
 		exList.setAdapter(mAdapter);
+		database.close();
 	}
 	
 	/*Generate PNG bitmap from bitmap */
