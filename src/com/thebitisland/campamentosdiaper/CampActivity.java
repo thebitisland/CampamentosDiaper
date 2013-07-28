@@ -90,6 +90,7 @@ public class CampActivity extends Activity {
 		case R.id.home_settings_logoff:
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putBoolean("loginOK", false);
+			editor.remove("id");
 			editor.commit();
 			Intent login = new Intent(context, LoginActivity.class);
 			startActivity(login);

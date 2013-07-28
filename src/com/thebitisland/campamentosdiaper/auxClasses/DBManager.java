@@ -115,14 +115,14 @@ public class DBManager {
 	 * @return True if the user exists in the table. False otherwise.
 	 * @param The username String representation
 	 */
-	public boolean checkUsername(String username) {
-		String query = "SELECT "+ KEY_U_UNAME + " FROM "+ DATABASE_USER_TABLE + " WHERE username= " + "\""+username+"\"";
+	public int checkUsername(String username) {
+		String query = "SELECT "+ KEY_U_RACEID + " FROM "+ DATABASE_USER_TABLE + " WHERE username= " + "\""+username+"\"";
 		Cursor cursor = ourDB.rawQuery(query, null);
 		
 		if(cursor.moveToFirst())
-			return true;
+			return cursor.getInt(0);
 		
-		return false;
+		return -1;
 	}
 	
 	/**

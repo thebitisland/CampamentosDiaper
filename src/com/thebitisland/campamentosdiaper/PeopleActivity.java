@@ -26,6 +26,7 @@ public class PeopleActivity extends Activity{
 	private ExpandableListAdapter mAdapter;
 	static Context context;
 	DBManager database;
+	SharedPreferences prefs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class PeopleActivity extends Activity{
 		setContentView(R.layout.activity_people);
 		
 		context = getApplicationContext();
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		database = new DBManager(this);
 		generateExpandableListView();
 
@@ -52,6 +54,10 @@ public class PeopleActivity extends Activity{
 		database.open();
 		String[][] users = database.getAllUsers();
 		for(int i=0;i<users.length;i++) {
+			
+			if(Integer.parseInt(users[i][0]) == prefs.getInt("id", -1))
+				continue;
+			
 			Bitmap photo = getBitMap(users[i][4]);
 			
 		cats.add(new Person(users[i][2]+" "+users[i][3],users[i][6],"Monitor", photo, 1));

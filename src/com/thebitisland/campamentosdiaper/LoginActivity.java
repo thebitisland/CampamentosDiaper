@@ -134,11 +134,20 @@ public class LoginActivity extends Activity {
 		db.open();
 
 		// Search for username. If it does not exist return false.
-		boolean userCheck = db.checkUsername(username);
-
+		boolean userCheck = false;
+		int userID = db.checkUsername(username);
+		if(userID != -1)
+			userCheck = true;
+		
 		// Check password. If it does not match the default one, return false.
-		boolean passCheck = password.equals("santonia2013");
-
+		boolean passCheck = password.equals("sant13");
+		
+		//Insert userID into preferences for exclusion from contact's list
+		if(userCheck && passCheck) {
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putInt("id", userID);
+			editor.commit();
+		}
 		// Close the database
 		db.close();
 
