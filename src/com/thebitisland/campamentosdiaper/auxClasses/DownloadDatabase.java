@@ -43,21 +43,15 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		pDialog.setIndeterminate(false);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pDialog.setCancelable(true);
-		pDialog.setMessage(context.getResources().getString(R.string.check_version));
+        pDialog.setMessage(context.getResources().getString(R.string.download_db));
 
 	}
 	
 	@Override
 	protected void onProgressUpdate(Void... values) {
 		// TODO Auto-generated method stub
-        pDialog.setMessage(context.getResources().getString(R.string.download_db));
+		pDialog.show();
 	}
-
-	@Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        //pDialog.show();
-    }
 	
 	@Override
 	protected Void doInBackground(Void... arg0) {
@@ -78,7 +72,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		}
         
         try {
-        	pDialog.show();
+        	//pDialog.show();
         publishProgress();
         URL input = new URL(DATABASE_URL);
         URLConnection conn = input.openConnection();
