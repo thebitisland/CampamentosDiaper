@@ -56,7 +56,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 	@Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pDialog.show();
+        //pDialog.show();
     }
 	
 	@Override
@@ -78,6 +78,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		}
         
         try {
+        	pDialog.show();
         publishProgress();
         URL input = new URL(DATABASE_URL);
         URLConnection conn = input.openConnection();
@@ -92,7 +93,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
         output.write(buffer);
         output.flush();
         output.close();
-        pDialog.dismiss();
+        //pDialog.dismiss();
         } catch(FileNotFoundException e) {
         } catch (IOException e) {
         }
@@ -130,6 +131,15 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		return false;
         
 	}
+
 	
+	@Override
+	protected void onPostExecute(Void result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		pDialog.dismiss();
+	}
+	
+
 
 }
