@@ -92,7 +92,7 @@ public class GamesActivity extends Activity{
 		items.add(persona3);
 		*/
 		ExpandableListView exList = (ExpandableListView) findViewById(R.id.games_list);  
-		mAdapter = new ActivityExpandableListAdapter(context, acts, items);
+		mAdapter = new ActivityExpandableListAdapter(this, acts, items);
 		exList.setIndicatorBounds(0, 20);
 		exList.setAdapter(mAdapter);
 		database.close();

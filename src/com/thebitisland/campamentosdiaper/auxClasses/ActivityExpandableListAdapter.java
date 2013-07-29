@@ -1,6 +1,8 @@
 package com.thebitisland.campamentosdiaper.auxClasses;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
@@ -10,7 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.thebitisland.campamentosdiaper.R;
 
@@ -58,15 +62,36 @@ public class ActivityExpandableListAdapter extends BaseExpandableListAdapter {
 
 	    Button downloadBtn = (Button) v.findViewById(R.id.download_button);
 	    Button checklistBtn = (Button) v.findViewById(R.id.checklist_button);
-	    
+
 	    final ActivityOptions det = childData.get(groupPosition).get(childPosition);
-	    
+	    final long activityID = groupData.get(groupPosition).getID();
+
 	    downloadBtn.setOnClickListener(new OnClickListener() {
 	    	public void onClick(android.view.View arg0) {
 	    		
 	    		//Get the user's phone number
 	    		database.open();
 	    		//Download file
+	    		String fileURL = database.getActivityFileURL(activityID);
+	    		DownloadFile fileTask = new DownloadFile(context);
+	    		fileTask.execute(fileURL);
+	    		try {
+					File file = fileTask.get();
+					if(file==null)
+						return;
+					
+					Intent show = new Intent();
+					show.setAction(android.content.Intent.ACTION_VIEW);
+					show.setDataAndType(Uri.fromFile(file), "application/pdf");
+					show.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					context.startActivity(show);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    		database.close();
 	    		
 	    	}

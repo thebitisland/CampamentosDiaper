@@ -14,5 +14,6 @@
     <!-- Spinner dialog texts -->
     <string name="check_version">Comprobando versión de base de datos...</string>
     <string name="download_db">Descargando nueva base de datos...</string>
+    <string name="download_file">Descargando archivo...</string>
 
 </resources>

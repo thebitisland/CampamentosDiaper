@@ -295,8 +295,21 @@ public class DBManager {
 				
 				cursor.close();
 				return activities;
+
+	}
+	
+	public String getActivityFileURL(long activityID) {
 		
+		String url = null;
+		String query = "SELECT " + KEY_A_URL + " FROM " + DATABASE_ACTIVITY_TABLE + 
+				" WHERE " + KEY_A_RACEID + "= " + activityID;
+		Cursor cursor = ourDB.rawQuery(query, null);
 		
+		if(cursor.moveToFirst()) {
+			url = cursor.getString(0);
+		}
+		
+		return url;
 	}
 	
 	
