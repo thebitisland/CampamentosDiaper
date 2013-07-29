@@ -23,6 +23,7 @@ public class CampActivity extends Activity {
 	Button campList;
 	Button mapButton;
 	Button peopleList;
+	Button activityList;
 	SharedPreferences prefs;
 	TextView dbversion;
 	Boolean isConnected;
@@ -53,6 +54,15 @@ public class CampActivity extends Activity {
 			}
 		});
 
+		activityList = (Button) findViewById(R.id.activities_button);
+		activityList.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				Intent activities = new Intent(context, GamesActivity.class);
+				startActivity(activities);
+			}
+			
+		});
 		/*
 		 * campList = (Button) findViewById(R.id.camps_button);
 		 * campList.setOnClickListener(new OnClickListener() {

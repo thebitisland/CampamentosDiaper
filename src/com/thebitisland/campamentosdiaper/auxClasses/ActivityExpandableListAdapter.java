@@ -135,11 +135,11 @@ public class ActivityExpandableListAdapter extends BaseExpandableListAdapter {
 		    if (v == null) {
 		        LayoutInflater inflater = (LayoutInflater)context.getSystemService
 		                  (Context.LAYOUT_INFLATER_SERVICE);
-		        v = inflater.inflate(R.layout.activity_camp, parent, false);
+		        v = inflater.inflate(R.layout.activity_item, parent, false);
 		    }
 
-		    ImageView picture = (ImageView) v.findViewById(R.id.contact_image);
-		    TextView activityName = (TextView) v.findViewById(R.id.contact_name);
+		    ImageView picture = (ImageView) v.findViewById(R.id.activity_image);
+		    TextView activityName = (TextView) v.findViewById(R.id.activity_name);
 
 		    ListActivity cat = groupData.get(groupPosition);
 

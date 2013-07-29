@@ -24,6 +24,7 @@ public class DBManager {
 	// DB name and tables
 	private static final String DATABASE_NAME = "CampsDB.db";
 	private static final String DATABASE_USER_TABLE = "userTable";
+	private static final String DATABASE_ACTIVITY_TABLE = "activityTable";
 	private static final int DATABASE_VERSION = 1;
 	// Class declaration
 	private SQLiteDatabase ourDB;
@@ -39,6 +40,14 @@ public class DBManager {
 	public static final String KEY_U_PHOTO = "photo";
 	public static final String KEY_U_EMAIL = "email";
 	public static final String KEY_U_PHONE = "phone";
+	
+	// Table 2 - Camp activities (Stores all USEFUL activities and their details)
+	public static final String KEY_A_RACEID = "_id";
+	public static final String KEY_A_NAME = "name";
+	public static final String KEY_A_URL = "file_url";
+	public static final String KEY_A_PICTURE = "photo";
+
+	
 
 
 	/**
@@ -67,6 +76,11 @@ public class DBManager {
 					+ KEY_U_EMAIL + " VARCHAR," 
 					+ KEY_U_PHONE + " VARCHAR"
 					+ ");");
+			db.execSQL("CREATE TABLE "+ DATABASE_ACTIVITY_TABLE + " ("
+					+ KEY_A_RACEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ KEY_A_NAME + " TEXT, "
+					+ KEY_A_URL + " TEXT, "
+					+ KEY_A_PICTURE + " TEXT");
 
 		}
 
@@ -257,6 +271,32 @@ public class DBManager {
 			phoneNumber = cursor.getString(0);
 		}
 		return phoneNumber;
+	}
+	
+	public String[][] getCampActivities(int campID) {
+		
+		String query = "SELECT " + KEY_A_RACEID + ", " + KEY_A_NAME + ", " + KEY_A_URL + ", " + 
+				KEY_A_PICTURE + " FROM " +DATABASE_ACTIVITY_TABLE;
+		
+				Cursor cursor = ourDB.rawQuery(query, null);
+				int numColumns = cursor.getColumnCount();
+				int numRows = cursor.getCount();
+				String[][] activities = new String[numRows][numColumns];
+				cursor.moveToFirst();
+				int i = 0;
+				while(!cursor.isAfterLast()) {
+					activities[i][0] = String.valueOf(cursor.getInt(0)); //ID
+					activities[i][1] = cursor.getString(1); //Activity name
+					activities[i][2] = cursor.getString(2); //File URL
+					activities[i][3] = cursor.getString(3); //Picture
+					i++;
+					cursor.moveToNext();
+				}
+				
+				cursor.close();
+				return activities;
+		
+		
 	}
 	
 	
