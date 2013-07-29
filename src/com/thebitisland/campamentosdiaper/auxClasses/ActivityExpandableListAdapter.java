@@ -53,7 +53,7 @@ public class ActivityExpandableListAdapter extends BaseExpandableListAdapter {
 	    if (v == null) {
 	        LayoutInflater inflater = (LayoutInflater)context.getSystemService
 	                  (Context.LAYOUT_INFLATER_SERVICE);
-	        v = inflater.inflate(R.layout.contact_expanded, parent, false);
+	        v = inflater.inflate(R.layout.activity_expanded, parent, false);
 	    }
 
 	    Button downloadBtn = (Button) v.findViewById(R.id.download_button);
@@ -135,7 +135,7 @@ public class ActivityExpandableListAdapter extends BaseExpandableListAdapter {
 		    if (v == null) {
 		        LayoutInflater inflater = (LayoutInflater)context.getSystemService
 		                  (Context.LAYOUT_INFLATER_SERVICE);
-		        v = inflater.inflate(R.layout.contact_item, parent, false);
+		        v = inflater.inflate(R.layout.activity_camp, parent, false);
 		    }
 
 		    ImageView picture = (ImageView) v.findViewById(R.id.contact_image);
