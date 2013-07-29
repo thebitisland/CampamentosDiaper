@@ -2,13 +2,13 @@ package com.thebitisland.campamentosdiaper.auxClasses;
 
 import android.widget.Button;
 
-public class CampOptions {
+public class ActivityOptions {
 	
 	private long id;
 	private Button downloadFile;
 	private Button checklist;
 	
-	public CampOptions(long id) {
+	public ActivityOptions(long id) {
 		this.id = id;
 	}
 	

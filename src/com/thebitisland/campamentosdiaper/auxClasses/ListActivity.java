@@ -2,14 +2,14 @@ package com.thebitisland.campamentosdiaper.auxClasses;
 
 import android.graphics.Bitmap;
 
-public class CampActivity {
+public class ListActivity {
 	
 	private int id;
 	private String name;
 	private String file_url;
 	private Bitmap picture;
 	
-	public CampActivity(int id, String name, String file_url, Bitmap picture) {
+	public ListActivity(int id, String name, String file_url, Bitmap picture) {
 		this.id = id;
 		this.name = name;
 		this.file_url = file_url;
