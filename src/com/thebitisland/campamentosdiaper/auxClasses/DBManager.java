@@ -80,7 +80,8 @@ public class DBManager {
 					+ KEY_A_RACEID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ KEY_A_NAME + " TEXT, "
 					+ KEY_A_URL + " TEXT, "
-					+ KEY_A_PICTURE + " TEXT");
+					+ KEY_A_PICTURE + " TEXT" 
+					+ ");");
 
 		}
 
