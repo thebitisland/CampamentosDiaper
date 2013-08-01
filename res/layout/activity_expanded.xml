@@ -20,20 +20,10 @@
             android:layout_height="60dip"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="3dp"
-            android:background="@drawable/phone_button"
+            android:background="@drawable/download_button"
             android:paddingTop="35dp"
-            android:text="Llamar"
+            android:text="PDF"
             android:textColor="@color/dark_text" />
-        
-        <Button
-            android:id="@+id/useless_button"
-            android:layout_width="90dp"
-            android:layout_height="60dip"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:paddingTop="35dp"
-            android:clickable="false"
-            android:visibility="invisible" />
 
         <Button
             android:id="@+id/checklist_button"
@@ -41,11 +31,20 @@
             android:layout_height="60dip"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="3dp"
-            android:background="@drawable/people_button"
+            android:background="@drawable/checklist_button"
             android:paddingTop="35dp"
-            android:text="Añadir"
+            android:text="Checklist"
             android:textColor="@color/dark_text" />
 
+        <Button
+            android:id="@+id/useless_button"
+            android:layout_width="90dp"
+            android:layout_height="60dip"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:clickable="false"
+            android:paddingTop="35dp"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </LinearLayout>
