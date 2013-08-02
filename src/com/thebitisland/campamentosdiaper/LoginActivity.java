@@ -149,6 +149,8 @@ public class LoginActivity extends Activity {
 		// Search for username. If it does not exist return false.
 		boolean userCheck = false;
 		int userID = db.checkUsername(username);
+		// Close the database
+				db.close();
 		if(userID != -1)
 			userCheck = true;
 		
@@ -161,8 +163,6 @@ public class LoginActivity extends Activity {
 			editor.putInt("id", userID);
 			editor.commit();
 		}
-		// Close the database
-		db.close();
 
 		return userCheck && passCheck;
 
