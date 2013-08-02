@@ -1,5 +1,7 @@
 package com.thebitisland.campamentosdiaper;
 
+import java.util.concurrent.ExecutionException;
+
 import com.thebitisland.campamentosdiaper.auxClasses.AuxMethods;
 import com.thebitisland.campamentosdiaper.auxClasses.DownloadDatabase;
 
@@ -10,6 +12,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +46,16 @@ public class CampActivity extends Activity {
 		if (isConnected) {
 			DownloadDatabase thread = new DownloadDatabase(prefs, this);
 			thread.execute();
+			try {
+				thread.get();
+				Log.d("DatabaseChecking", "Database downloaded");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		peopleList = (Button) findViewById(R.id.personal_button);

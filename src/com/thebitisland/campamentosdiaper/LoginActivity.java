@@ -1,5 +1,7 @@
 package com.thebitisland.campamentosdiaper;
 
+import java.util.concurrent.ExecutionException;
+
 import com.thebitisland.campamentosdiaper.auxClasses.AuxMethods;
 import com.thebitisland.campamentosdiaper.auxClasses.DBManager;
 import com.thebitisland.campamentosdiaper.auxClasses.DownloadDatabase;
@@ -72,6 +74,16 @@ public class LoginActivity extends Activity {
 		if (isConnected) {
 			DownloadDatabase thread = new DownloadDatabase(prefs, this);
 			thread.execute();
+			try {
+				thread.get();
+				Log.d("DatabaseChecking", "Database downloaded");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		/* Ñapa vFinal (Ojo con ActionBars, puede dar problemas) */
@@ -200,6 +212,16 @@ public class LoginActivity extends Activity {
 			if (isConnected) {
 				DownloadDatabase thread = new DownloadDatabase(prefs, this);
 				thread.execute();
+				try {
+					thread.get();
+					Log.d("DatabaseChecking", "Database downloaded");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			return true;
 		default:
