@@ -42,7 +42,7 @@ public class DownloadDatabase extends AsyncTask<Void, Void, Void> {
 		pDialog = new ProgressDialog(context);
 		pDialog.setIndeterminate(false);
 		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pDialog.setCancelable(true);
+        pDialog.setCancelable(false);
         pDialog.setMessage(context.getResources().getString(R.string.download_db));
 
 	}

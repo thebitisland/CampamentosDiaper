@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -189,4 +190,20 @@ public class LoginActivity extends Activity {
 				.getWindowToken(), 0);
 	}
 
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.login_menu_update:
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putInt("DBVersion", 0);
+			editor.commit();
+			if (isConnected) {
+				DownloadDatabase thread = new DownloadDatabase(prefs, this);
+				thread.execute();
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">DIAPER Camps</string>
-    <string name="login_settings_1">Recordar contraseña</string>
+    <string name="login_menu_update">Forzar actualización</string>
     <string name="home_settings_logoff">Desconectarse</string>
     <string name="home_settings_options">Opciones</string>
     <string name="user_field">Usuario</string>
